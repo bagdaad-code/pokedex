@@ -5,6 +5,8 @@ import { PagedData } from "./models/paged-data.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {PageDetail} from "./models/pokemon-detail";
+import {Login} from "./models/paged-login";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +25,11 @@ export class PokemonService {
   
   getPokemonSearch(param : string) : Observable<PagedData>{
     return this.http.get<PagedData>("http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/pokemons?search="+param)
+  }
+
+  PostConnexion(log : string , pass : string): Observable<Login>{
+    return this.http.post<Login>("http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/auth/login",{email:log,password:pass})
+  
   }
 
 }

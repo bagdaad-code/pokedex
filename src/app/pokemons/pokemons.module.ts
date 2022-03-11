@@ -15,6 +15,7 @@ import { PokedexComponent } from './pokedex/pokedex.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { TeamComponentComponent } from './team-component/team-component.component';
 
 
 
@@ -24,6 +25,7 @@ import {MatInputModule} from '@angular/material/input';
     PokemonListComponent,
     PokemonDetailComponent,
     PokedexComponent,
+    TeamComponentComponent,
   
   ],
   exports: [
