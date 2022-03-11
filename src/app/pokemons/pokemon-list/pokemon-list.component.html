@@ -1,0 +1,14 @@
+<mat-form-field appearance="fill">
+  <mat-label style="color: darkblue;">Your Pokemon</mat-label>
+  <input type="text"  matInput [(ngModel)]="text" (keyup)="onSearchChange()" >
+ 
+</mat-form-field>
+<mat-nav-list style="height: 85vh;overflow: auto"
+infinite-scroll
+[scrollWindow]="false"
+(scrolled)="onScrollDown($event)">
+  <mat-list-item *ngFor="let pokemon of pokemons" (click)="OnPokemonSelected(pokemon.id)"  >
+    <img   matListAvatar src="assets/img/sprites/{{pokemon.id}}.png" alt="...">
+    <a >{{pokemon.id}}.{{pokemon.name}}</a>
+  </mat-list-item>
+</mat-nav-list>
