@@ -4,6 +4,8 @@ import {  EventEmitter, NgModule,  Output } from '@angular/core';
 import {PokemonService} from "../pokemon.service";
 import {Pokemon} from "../models/pokemon.model";
 import {Login} from "../models/paged-login";
+import { waitForAsync } from '@angular/core/testing';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-team-component',
@@ -13,12 +15,27 @@ import {Login} from "../models/paged-login";
 export class TeamComponentComponent implements OnInit {
 
   constructor(private pokemonService : PokemonService) { }
-  info ?: Login
-  ngOnInit(): void {
-  this.GoConnexion();
+  
+  MyPokemons? : Pokemon[]
+
+   ngOnInit() {
+    this.GoConnexion().pipe(
+      switchMap(tokens => this.getIdMyPokemon(tokens.access_token))
+    ).subscribe( myPokemons =>  this.getMyPokemon(myPokemons[1]).subscribe(MyPokemons => console.log(MyPokemons)));
+  
+    
   }
 
   GoConnexion() {
-    this.pokemonService.PostConnexion(environment.email,environment.password).subscribe(info => this.info = info)    
+    return this.pokemonService.PostConnexion(environment.email,environment.password)     
   }  
+
+  getIdMyPokemon(access_token : string) {
+    return this.pokemonService.getMyPokemon(access_token)    
+  }    
+
+  getMyPokemon(id : number) {
+    return this.pokemonService.getPokemon(id)    
+  }  
+
 }

@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {PageDetail} from "./models/pokemon-detail";
 import {Login} from "./models/paged-login";
-
+import { HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,7 +29,11 @@ export class PokemonService {
 
   PostConnexion(log : string , pass : string): Observable<Login>{
     return this.http.post<Login>("http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/auth/login",{email:log,password:pass})
-  
+  }
+
+  getMyPokemon(hash : string): Observable<number[]> {
+    const headers = new HttpHeaders().set('Authorization', "Bearer "+hash); 
+    return  this.http.get<number[]>("http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/trainers/me/team", { headers });
   }
 
 }
