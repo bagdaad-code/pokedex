@@ -1,1 +1,9 @@
-<p>team-component works!</p>
+<h1 style="text-align: center;">Your Deck</h1>
+
+    <mat-list-item *ngFor="let pokemon of MyPokemons"  >
+        <div style=" vertical-align: top;display: inline-table;text-align: center;width: 400px;flex: 1 1 80px;   ">
+            <img  style=" zoom: 0.5;" matListAvatar src="assets/img/official-artwork/{{pokemon.id}}.png" alt="...">
+            <a style="display:block;">{{pokemon.name}}</a>
+            <button  (click)="RemovePokemon(pokemon.id)">Remove</button>
+        </div>
+    </mat-list-item>

@@ -1,8 +1,6 @@
 import { Component, EventEmitter, NgModule, OnInit, Output } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {PokemonService} from "../pokemon.service";
 import {Pokemon} from "../models/pokemon.model";
-import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-list',

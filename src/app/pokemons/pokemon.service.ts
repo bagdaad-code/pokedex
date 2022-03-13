@@ -11,8 +11,7 @@ import { HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class PokemonService {
-
-
+  login ?: Observable<Login>
   constructor(private http : HttpClient ) { }
 
   getPokemons(offset: number, limit: number) : Observable<PagedData>{
@@ -28,12 +27,21 @@ export class PokemonService {
   }
 
   PostConnexion(log : string , pass : string): Observable<Login>{
-    return this.http.post<Login>("http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/auth/login",{email:log,password:pass})
+    this.login = this.http.post<Login>("http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/auth/login",{email:log,password:pass})
+    return this.login;
   }
 
   getMyPokemon(hash : string): Observable<number[]> {
     const headers = new HttpHeaders().set('Authorization', "Bearer "+hash); 
     return  this.http.get<number[]>("http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/trainers/me/team", { headers });
   }
+
+  updateMyPokemons(pokemons : number[], hash : string){
+    const headers = new HttpHeaders().set('Authorization', "Bearer "+hash); 
+    const body=JSON.stringify(pokemons);
+    return  this.http.put<number>("  http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/trainers/me/team", body,{headers})
+  }
+
+
 
 }

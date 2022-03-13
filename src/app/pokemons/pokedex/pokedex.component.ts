@@ -12,6 +12,7 @@ export class PokedexComponent implements OnInit {
   constructor() { }
   
   ngOnInit(): void {
+      
   }
   OnPokemonSelected(id : number){
   this.id_pokemon = id;

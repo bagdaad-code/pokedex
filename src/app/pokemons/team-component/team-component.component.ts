@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {environment} from  '../../../environments/environment'
-import {  EventEmitter, NgModule,  Output } from '@angular/core';
 import {PokemonService} from "../pokemon.service";
 import {Pokemon} from "../models/pokemon.model";
-import {Login} from "../models/paged-login";
-import { waitForAsync } from '@angular/core/testing';
-import { switchMap } from 'rxjs';
+import { forkJoin, Observable, of } from "rxjs";
 
+import { switchMap } from 'rxjs';
+import {PageDetail} from "../models/pokemon-detail";
 @Component({
   selector: 'app-team-component',
   templateUrl: './team-component.component.html',
@@ -15,16 +14,27 @@ import { switchMap } from 'rxjs';
 export class TeamComponentComponent implements OnInit {
 
   constructor(private pokemonService : PokemonService) { }
-  
-  MyPokemons? : Pokemon[]
 
-   ngOnInit() {
+  public MyPokemons ?: PageDetail [] =[] ;
+  public MyPokemonsId ?: number [] =[] ;
+
+  ngOnInit() {
     this.GoConnexion().pipe(
-      switchMap(tokens => this.getIdMyPokemon(tokens.access_token))
-    ).subscribe( myPokemons =>  this.getMyPokemon(myPokemons[1]).subscribe(MyPokemons => console.log(MyPokemons)));
-  
-    
+      switchMap(tokens =>
+      
+        this.getIdMyPokemon(tokens.access_token)
+      )
+    ).subscribe( myPokemons  =>  {
+        myPokemons.forEach( pokemon => {
+          this.MyPokemonsId?.push(pokemon)
+          this.getMyPokemon(pokemon).subscribe(MyPokemon => {
+            this.MyPokemons?.push(MyPokemon) 
+          }   );
+          
+        });
+    });    
   }
+
 
   GoConnexion() {
     return this.pokemonService.PostConnexion(environment.email,environment.password)     
@@ -37,5 +47,24 @@ export class TeamComponentComponent implements OnInit {
   getMyPokemon(id : number) {
     return this.pokemonService.getPokemon(id)    
   }  
+
+  RemovePokemon(id : number) : void{
+    if (this.MyPokemonsId){
+      console.log(id);
+      
+      console.log(this.MyPokemonsId);
+      
+      for( var i = 0; i < this.MyPokemonsId.length; i++){ 
+        if ( this.MyPokemonsId[i] === id) { 
+          this.MyPokemonsId.splice(i, 1); 
+        }
+      }
+      console.log(this.MyPokemonsId);
+      
+      // this.pokemonService.updateMyPokemons(this.MyPokemonsId,this.)   
+    }
+ 
+
+  }
 
 }
