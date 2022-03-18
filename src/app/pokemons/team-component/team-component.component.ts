@@ -91,7 +91,7 @@ export class TeamComponentComponent implements OnInit,OnChanges  {
   OnPokemonSelected(id : number){
     if (this.MyPokemonsId){  
       if(this.MyPokemonsId.length==6){
-        this.text="Pokedex Full !!"
+        this.text="Deck Full !!"
         this.isVisible=true;
         console.log(this.isVisible);
         setTimeout(()=>{this.isVisible=true;}, 2000)
