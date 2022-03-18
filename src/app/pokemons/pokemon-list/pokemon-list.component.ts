@@ -1,7 +1,9 @@
-import { Component, EventEmitter, NgModule, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, NgModule, OnInit, Output } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {PokemonService} from "../pokemon.service";
 import {Pokemon} from "../models/pokemon.model";
-
+import { concat } from 'rxjs';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
@@ -39,10 +41,8 @@ export class PokemonListComponent implements OnInit {
     this.pokemonService.getPokemon(id);    
   }
   onSearchChange(){
-  
     if(this.text)
     this.pokemonService.getPokemonSearch(this.text).subscribe(mespokemon => this.pokemons = mespokemon.data)
     this.pokemonService.getPokemons(0,0).subscribe(mespokemon => this.pokemons = mespokemon.data)
-
   }
 }
