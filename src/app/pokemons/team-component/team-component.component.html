@@ -1,11 +1,11 @@
 
 <mat-drawer-container autosize >
-<mat-drawer mode="side" opened style="">
+<mat-drawer mode="side" opened>
     <app-pokemon-list  (PokemonSelected)="OnPokemonSelected($event)"></app-pokemon-list>
 
 </mat-drawer>
 
-<mat-drawer-content style="height: 100vh;display: flex ;background-color:;" >
+<mat-drawer-content style="height: 100vh;display: flex ;" >
     <div>
         <h1 style="text-align: center;">Your Deak </h1>
         <div style="display: flex;justify-content: center;align-items: center;flex-wrap: wrap;">
@@ -13,7 +13,7 @@
                 <div style="background-color: blanchedalmond;margin: 5px;width: 350px;display: flex;align-items: center;flex-direction: column;border: 10px solid coral;border-radius: 50%;padding: 10px;">
                 <img  style="zoom: 0.5;" matListAvatar src="assets/img/official-artwork/{{pokemon.id}}.png" alt="...">
                 <a style="color: black">{{pokemon?.id |  number:'3.'}} {{pokemon.name}}</a>
-                <button  style="width: ;" (click)="RemovePokemon(pokemon.id)">Remove</button>
+                <button   (click)="RemovePokemon(pokemon.id)">Remove</button>
                 </div>
                 </mat-list-item>
         </div>
